@@ -1,1 +1,13 @@
 
+.bg-dark{
+	background-color: #565b72;
+}
+
+
+.mt-50{
+	margin-top: 50px;
+}
+#canvas{
+    border: 2px solid black;
+}
+
