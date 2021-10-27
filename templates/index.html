@@ -1,1 +1,143 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="static/css/style.css">
 
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <title>Car Price Predictor</title>
+  </head>
+  <body class="bg-dark">
+    <div class="container">
+        <div class="row">
+            <div class="card mt-50" style="width: 100%; height: 100%">
+                <div class="card-header" style="text-align: center">
+                    <h1>Welcome to Car Price Predictor</h1>
+                </div>
+            
+            <div class="card-body">
+                <div class="col-12" style="text-align: center">
+                    <h5>This app predicts the price of a car you want to sell. Try filling the details below: </h5>
+                </div>
+                <br>
+                <form method="post"  accept-charset="utf-8">
+
+                    <div class="col-10 form-group" style="text-align: center;">
+                        <label>
+                            <b>Select the brand: </b>
+                        </label>
+                        <select class="selectpicker form-control" id="Brand" name="Brand" required ="1">
+                            {% for brand in brands %}
+
+                            <option value="{{brand}}">{{brand}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-10 form-group" style="text-align: center;">
+                        <label>
+                            <b>Select the Transmission: </b>
+                        </label>
+                        <select class="selectpicker form-control" id="Boite" name="Boite" required ="1">
+                            {% for boite in boites %}
+
+                            <option value="{{boite}}">{{boite}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-10 form-group" style="text-align: center;">
+                        <label>
+                            <b>Select the Year Of production: </b>
+                        </label>
+                        <select class="selectpicker form-control" id="Year" name="Year" required ="1">
+                            {% for Year in years %}
+                            <option value="{{Year}}">{{Year}}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+                    <div class="col-10 form-group" style="text-align: center;">
+                        <label>
+                            <b>Select the Energie Type: </b>
+                        </label>
+                        <select class="selectpicker form-control" id="Energie" name="Energie" required ="1">
+                            {% for energie in Energie %}
+                            <option value="{{energie}}">{{energie}}</option>
+                            {% endfor %}
+
+                        </select>
+                    </div>
+                    <div class="col-10 form-group" style="text-align: center;">
+                        <label>
+                            <b>Enter number of kilometers: </b>
+                        </label>
+                        <input class="form-control" type="text" id="kilometrage" name="kilometrage" placeholder="Enter No of kilometers drive,">
+                    </div>
+                    <div class="col-10 form-group" style="text-align: center;">
+                        <button class="btn btn-primary form-control" onclick="send_data()">Predict Price</button>
+                    </div>
+                </form>
+                <br>
+
+                <div class="row">
+                    <div class="col-12" style="text-align: center">
+                        <h3><span id="prediction"></span></h3>  
+                    </div>
+                
+                </div>
+
+            
+
+
+
+            </div>
+
+        </div>
+    </div>
+    <script>
+        function form_handler(event)
+        {
+            event.preventDefault();
+        }
+        function send_data()
+        {
+            document.querySelector('form').addEventListener('submit',form_handler);
+            //default behaviour
+            //send and receive data to predict
+            var fd = new FormData(document.querySelector('form'));
+
+
+
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST','/predict',true)
+            document.getElementById("prediction").innerHTML="Wait for prediction please ....."
+            xhr.onreadystatechange= function()
+            {
+                if(xhr.readyState == XMLHttpRequest.DONE)
+                {
+                    document.getElementById("prediction").innerHTML="Prediction is: " + xhr.responseText; 
+                }
+            } 
+
+            xhr.onload=function(){};
+            xhr.send(fd);
+
+        }
+
+
+
+
+
+
+    </script>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+  </body>
+</html>
