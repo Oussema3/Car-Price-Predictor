@@ -1,13 +1,16 @@
+"""importing libraries"""
 from flask import Flask , render_template , request
 import pandas as pd
 import pickle
 import numpy as np
 app=Flask(__name__)
+### Using the model 
 model = pickle.load(open("LinearRegressionModel.pkl","rb"))
-
+### opening the data file
 car=pd.read_excel('SecondToLast.xlsx')
 
 @app.route('/')
+### defining features
 def index():
     brands = sorted(car['Brand'].unique())
     boites= sorted(car['Boite'].unique())
@@ -16,7 +19,7 @@ def index():
 
     
     return render_template('index.html', brands=brands , boites = boites, years=Year, Energie=Energie)
-
+### defining prediction 
 @app.route('/predict',methods=['POST'])
 def predict():
     Brand=request.form.get('Brand')
