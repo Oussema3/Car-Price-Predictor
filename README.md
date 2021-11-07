@@ -90,3 +90,4 @@ Existing Solutions
 
 When I looked for similar product i found out that this is only existing as projects in Kaggle etc , but what i think is that such solution is not existed yet (at least no website)
 
+
